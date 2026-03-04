@@ -1,33 +1,5 @@
 let
-  linuxmobile = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPBcbiAvxkajtnODnfhsW+EjxqcJytkf5yuzRXH1LNVA bdiez19@gmail.com";
-  system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdNa3TQar/1PtLci+pODvVU4FCNvElVkOQG4RDJ/TUH root@aesthetic";
+
 in {
-  "discordo.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "github.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "openrouter.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "twt.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "gemini.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "context7.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "exa.age".publicKeys = [
-    linuxmobile
-    system
-  ];
+
 }

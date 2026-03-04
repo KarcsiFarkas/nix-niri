@@ -6,7 +6,7 @@
   configFile = "gammastep/config.ini";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     (gammastep.override {
       withRandr = false;
       withDrm = false;

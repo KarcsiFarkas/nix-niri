@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  users.users.linuxmobile = {
+  users.users.karixos = {
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = [

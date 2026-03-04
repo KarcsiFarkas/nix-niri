@@ -5,7 +5,7 @@
 }: let
   configFile = "cliphist/cliphistrc";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     cliphist
     wl-clipboard
   ];

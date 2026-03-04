@@ -8,20 +8,24 @@
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
+    supportedLocales = [
+      "en_US.UTF-8/UTF-8"
+      "hu_HU.UTF-8/UTF-8"
+    ];
     extraLocaleSettings = {
-      LC_ADDRESS = "es_AR.UTF-8";
-      LC_IDENTIFICATION = "es_AR.UTF-8";
-      LC_MEASUREMENT = "es_AR.UTF-8";
-      LC_MONETARY = "es_AR.UTF-8";
-      LC_NAME = "es_AR.UTF-8";
-      LC_NUMERIC = "es_AR.UTF-8";
-      LC_PAPER = "es_AR.UTF-8";
-      LC_TELEPHONE = "es_AR.UTF-8";
-      LC_TIME = "es_AR.UTF-8";
+      LC_ADDRESS = "hu_HU.UTF-8";
+      LC_IDENTIFICATION = "hu_HU.UTF-8";
+      LC_MEASUREMENT = "hu_HU.UTF-8";
+      LC_MONETARY = "hu_HU.UTF-8";
+      LC_NAME = "hu_HU.UTF-8";
+      LC_NUMERIC = "hu_HU.UTF-8";
+      LC_PAPER = "hu_HU.UTF-8";
+      LC_TELEPHONE = "hu_HU.UTF-8";
+      LC_TIME = "hu_HU.UTF-8";
     };
   };
 
-  console.keyMap = "la-latin1";
+  console.keyMap = "us";
 
   # don't touch this
   system = {
@@ -30,7 +34,7 @@
   };
 
   time = {
-    timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
+    timeZone = lib.mkDefault "Europe/Budapest";
     hardwareClockInLocalTime = lib.mkDefault true;
   };
 

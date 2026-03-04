@@ -9,54 +9,7 @@
   imports = [./hardware-configuration.nix];
 
   age = {
-    identityPaths = [
-      "/etc/ssh/ssh_host_ed25519_key"
-    ];
 
-    secrets = {
-      discordo = {
-        file = "${self}/secrets/discordo.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      github = {
-        file = "${self}/secrets/github.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      openrouter = {
-        file = "${self}/secrets/openrouter.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      twt = {
-        file = "${self}/secrets/twt.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      gemini = {
-        file = "${self}/secrets/gemini.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      context7 = {
-        file = "${self}/secrets/context7.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-      exa = {
-        file = "${self}/secrets/exa.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
-    };
   };
 
   boot = {

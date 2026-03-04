@@ -8,7 +8,7 @@
     mkKeyValue = lib.generators.mkKeyValueDefault {} " = ";
   };
 in {
-  users.users.linuxmobile.packages = with pkgs; [swayimg];
+  users.users.karixos.packages = with pkgs; [swayimg];
 
   xdg.configFile."${configFile}".text = toINI {
     info = {show = "no";};

@@ -33,7 +33,7 @@
     '';
   configFile = "opencode/config.json";
 in {
-  users.users.linuxmobile.packages = [
+  users.users.karixos.packages = [
     opencodeWrapped
   ];
   xdg.configFile = {

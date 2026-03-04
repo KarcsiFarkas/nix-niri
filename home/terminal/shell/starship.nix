@@ -10,7 +10,7 @@ in {
     STARSHIP_CONFIG = "${config.xdg.configHome}/${configFile}";
     STARSHIP_LOG = "error";
   };
-  users.users.linuxmobile.packages = [pkgs.starship];
+  users.users.karixos.packages = [pkgs.starship];
   xdg.configFile = {
     "${configFile}".source = toTOML "starship.toml" {
       add_newline = true;

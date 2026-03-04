@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     polkit_gnome
   ];
 

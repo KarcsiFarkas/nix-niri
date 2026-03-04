@@ -18,7 +18,7 @@
       "$@"
   '';
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     skim
     ripgrep
     eza

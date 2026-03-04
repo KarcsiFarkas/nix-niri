@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.xdg;
-  username = "linuxmobile";
+  username = "karixos";
   fileType = lib.types.submodule {
     options = {
       text = lib.mkOption {

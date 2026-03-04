@@ -33,7 +33,7 @@
 
   twtSettings = {
     twitch = {
-      username = "linuxmobile";
+      username = "karixos";
       channel = "bunzopy";
       server = "irc.chat.twitch.tv";
     };
@@ -79,7 +79,7 @@
     };
   };
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     twitch-hls-client
     mpv
   ];

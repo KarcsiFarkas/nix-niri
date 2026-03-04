@@ -52,7 +52,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages =
+  users.users.karixos.packages =
     [
       quickshellWrapped
     ]

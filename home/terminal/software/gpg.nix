@@ -6,7 +6,7 @@
   gpgConfigFile = "gnupg/gpg.conf";
   agentConfigFile = "gnupg/gpg-agent.conf";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     gnupg
     pinentry-gnome3
   ];

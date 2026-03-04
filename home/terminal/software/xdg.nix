@@ -49,7 +49,7 @@
     XDG_VIDEOS_DIR="$HOME/Videos"
   '';
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     xdg-utils
     (writeShellScriptBin "xdg-terminal-exec" ''foot start "$@"'')
   ];

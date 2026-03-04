@@ -14,6 +14,6 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [chromiumWrapped];
+  users.users.karixos.packages = [chromiumWrapped];
   environment.sessionVariables = chromiumFlags.sessionVariables;
 }

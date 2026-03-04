@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.karixos.packages = with pkgs; [
     inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.gemini-cli
   ];
   home.file = {

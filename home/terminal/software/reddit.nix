@@ -31,7 +31,7 @@
     exec ${pkgs.reddit-tui}/bin/reddittui --subreddit ${builtins.concatStringsSep "+" mySubreddits} "$@"
   '';
 in {
-  users.users.linuxmobile.packages = [
+  users.users.karixos.packages = [
     pkgs.reddit-tui
     redditLauncher
   ];

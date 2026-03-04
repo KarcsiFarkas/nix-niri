@@ -16,6 +16,6 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [heliumWrapped];
+  users.users.karixos.packages = [heliumWrapped];
   environment.sessionVariables = chromiumFlags.sessionVariables;
 }

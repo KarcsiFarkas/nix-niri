@@ -4,7 +4,7 @@
     greetd = let
       session = {
         command = "${pkgs.niri}/bin/niri-session";
-        user = "linuxmobile";
+        user = "karixos";
       };
     in {
       enable = true;
@@ -15,7 +15,7 @@
       };
     };
     displayManager.autoLogin = {
-      user = "linuxmobile";
+      user = "karixos";
       enable = true;
     };
   };
