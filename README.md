@@ -1,142 +1,82 @@
-<p align="center"><img src="https://i.imgur.com/X5zKxvp.png" width=300px></p>
+# nix-niri
 
-<p align="center">
-  <a href="https://hyprland.org/">
-    <img src="https://img.shields.io/static/v1?label=NIRI&message=latest&style=flat&logo=hyprland&colorA=24273A&colorB=8AADF4&logoColor=CAD3F5"/>
-  </a>
-   <a href="https://github.com/zemmsoares/awesome-rices">
-    <img src="https://raw.githubusercontent.com/zemmsoares/awesome-rices/main/assets/awesome-rice-badge.svg" alt="awesome-rice-badge">
-  </a>
-  <a href="https://nixos.wiki/wiki/Flakes">
-    <img src="https://img.shields.io/static/v1?label=Nix-Flake&message=check&style=flat&logo=nixos&colorA=24273A&colorB=9173ff&logoColor=CAD3F5">
-  </a>
-  <a href="https://nixos.org/">
-  <img src="https://img.shields.io/badge/NixOS-unstable-informational.svg?style=flat&logo=nixos&logoColor=CAD3F5&colorA=24273A&colorB=8AADF4">
-  </a>
-</p>
+NixOS flake for my `aesthetic` host, centered around Niri and a modular
+split between `system/` and `home/`.
 
-<p align="center"><img src="/assets/1.png" width=600px></p>
+## What changed
 
-<h1 align="center">芯 (Shin)</h1>
+- Migrated to a pure flake/module layout with `flake-parts`.
+- Host wiring is now centralized in `hosts/default.nix`.
+- `aesthetic` composes `desktop + laptop` module sets from `system/default.nix`.
+- User environment modules live under `home/` and are imported directly.
+- Security hardening was expanded in `hosts/aesthetic/default.nix` (kernel params,
+  sysctls, apparmor, TPM2, systemd coredump restrictions).
+- Daily workflow is built around `nh` (`nh os test`, `nh os switch`).
 
-### ⚠ <sup><sub><samp>PLEASE RESPECT THE CREDITS IF YOU USE SOMETHING FROM MY DESKTOP/SETUP.</samp></sub></sup>
+## Layout
 
-> **Note:** This configuration has been refactored to remove Home Manager to reduce evaluation overhead. While projects like `hjem` and `hjem-rum` were considered, a pure NixOS approach was chosen for simplicity and performance.
-
----
-
-<pre align="center"><p align="center"><a href="#seedling--setup">SETUP</a> • <a href="#herb--guides">GUIDES</a> • <a href="#four_leaf_clover--key-bindings">KEYBINDS</a> • <a href="https://linu.dev/kaku">GALLERY</a></p></pre>
-
----
-
-<a href="#octocat--hi-there-thanks-for-dropping-by">
-  <picture>
-    <img alt="" align="right" width="400px" src="/assets/6.png"/>
-  </picture>
-</a>
-
-- **Window Manager** • [Niri](https://github.com/YaLTeR/niri/)🎨 Scrolleable WM!
-- **Shell** • [Fish](https://fishshell.com/) 🐟 with
-  [starship](https://github.com/starship/starship) Cross Shell Platform!
-- **Terminal** • [Ghostty](https://ghostty.org/) 💻 Powerful Hyped term
-- **Panel** • [Noctalia!](https://noctalia.dev/) 🍧 Beautiful and minimalist desktop shell
-- **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File
-  Manager!
-- **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rustacean vim
-  version!
-- **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My
-  Fork of colloid
-
-## 🌼 <samp>INSTALLATION (NixOS)</samp>
-
-> Request:
-> [NixOs](https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso)
-
-- Download ISO.
-
-```bash
-wget -O https://channels.nixos.org/nixos-24.05/latest-nixos-minimal-x86_64-linux.iso
+```text
+.
+├─ flake.nix
+├─ hosts/
+│  ├─ default.nix
+│  └─ aesthetic/
+├─ system/
+│  ├─ core/
+│  ├─ hardware/
+│  ├─ network/
+│  ├─ nix/
+│  ├─ programs/
+│  └─ services/
+├─ home/
+│  ├─ editors/
+│  ├─ packages/
+│  ├─ services/
+│  ├─ terminal/
+│  └─ xdg-compat.nix
+└─ pkgs/
 ```
 
-- Boot Into the Installer.
+## Main stack
 
-- Switch to Root: `sudo -i`
+- WM: [Niri](https://github.com/YaLTeR/niri/)
+- Shell: [Fish](https://fishshell.com/) + [starship](https://github.com/starship/starship)
+- Terminals: [Ghostty](https://ghostty.org/) and Foot
+- File manager: [Yazi](https://github.com/sxyazi/yazi)
+- Editor: [Helix](https://docs.helix-editor.com/)
+- Panel/shell: [Noctalia](https://noctalia.dev/)
 
-- Partitions:
+## Build and test
 
-_I prefer to use 1GB on the EFI partition. Specifically because the
-'generations' list may become very long, and to avoid overloading the
-partition._
+From the repo root:
 
 ```bash
-# Replace nvme with your disk partition
-gdisk /dev/nvme0n1
+NH_FLAKE=$PWD nh os test --hostname aesthetic
 ```
 
-    - `o` (create new partition table)
-    - `n` (add partition, 512M, type ef00 EFI)
-    - `n` (add partition, remaining space, type 8300 Linux)
-    `w` (write partition table and exit)
-
-- Format Partitions:
+Apply:
 
 ```bash
-mkfs.fat -F 32 -n EFI /dev/nvme0n1p1
-mkfs.xfs -L NIXOS /dev/nvme0n1p2
+NH_FLAKE=$PWD nh os switch --hostname aesthetic
 ```
 
-- Mount Partitions:
+Direct flake check (without `nh`):
 
 ```bash
-mount /dev/disk/by-label/NIXOS /mnt
-mkdir -p /mnt/boot
-mount /dev/disk/by-label/EFI /mnt/boot
+nix build .#nixosConfigurations.aesthetic.config.system.build.toplevel
 ```
 
-- Enable nixFlakes
+## Fresh install (minimal)
 
 ```bash
-nix-shell -p nixVersions.stable git
-```
-
-- Clone my Dotfiles
-
-```bash
-git clone --depth 1 https://github.com/linuxmobile/shin /mnt/etc/nixos
-```
-
-- Generate your Own Nix Hardware Settings:
-
-### ⚠ <sup><sub><samp>DON'T FORGET IT</samp></sub></sup>
-
-```bash
-sudo nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic
-
-# Remove configuration.nix
-rm -rf /mnt/etc/nixos/hosts/aesthetic/configuration.nix
-```
-
-- Install Dotfiles Using Flake
-
-```bash
-# Move to folder
-cd mnt/etc/nixos
-
-# Install
+git clone --depth 1 https://github.com/linuxmobile/nix-niri /mnt/etc/nixos
+cd /mnt/etc/nixos
+nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic
+rm -f /mnt/etc/nixos/hosts/aesthetic/configuration.nix
 nixos-install --flake .#aesthetic
 ```
 
-- Reboot
-
-### 🐙 <sup><sub><samp>Remember <strong>Default</strong> User & password are: nixos</samp></sub></sup>
-
-- Change Default password for User.
-
-```bash
-passwd YourUser
-```
-
-### 🌸 <samp>SCREENSHOTS</samp>
+## Screenshots
 
 |                           |                           |
 | :-----------------------: | :-----------------------: |
@@ -144,44 +84,37 @@ passwd YourUser
 | <img src="/assets/3.png"> | <img src="/assets/4.png"> |
 | <img src="/assets/5.png"> | <img src="/assets/6.png"> |
 
-### 🌻 <samp>TODO LIST</samp>
+## Acknowledgements
 
-### 🧩 <samp>ADDITIONAL TIPS</samp>
+- [owl4ce](https://github.com/owl4ce)
+- [Ilham25](https://github.com/ilham25)
+- [Siduck](https://github.com/siduck)
+- [NvChad](https://github.com/NvChad)
+- [Rxyhn](https://github.com/rxyhn)
+- [HeinzDev](https://github.com/HeinzDev)
+- [fufexan](https://github.com/fufexan)
+- [AmitGolden](https://github.com/AmitGolden)
 
-If you're using this NixOS configuration flake locally, you can simplify the process of switching and managing your system using [`nh`](https://github.com/viperML/nh), a CLI helper for Nix Flakes.
+## WSL fix that made `nh os test` pass
 
-To switch your system configuration with `nh`, use:
+Root cause was CRLF line endings in `.nix` files (Windows checkout), which broke
+generated shell snippets during Nix builds (`$'\r': command not found` in
+`atuin-fish-init`).
+
+Run this in WSL from repo root:
 
 ```bash
-NH_FLAKE=/home/linuxmobile/Dev/kaku/ nh os switch
+find . -name '*.nix' -type f -print0 | xargs -0 sed -i 's/\r$//'
+NH_FLAKE=$PWD nh os test --hostname aesthetic
 ```
 
-This avoids needing to type out the full `nixos-rebuild` command manually and provides a cleaner workflow when iterating on your setup.
+Recommended to prevent recurrence:
 
-> 💡 Make sure `nh` is installed in your system environment or user profile.
-
-## 🍀 <samp>KEY BINDINGS</samp>
-
-## 💐 <samp>ACKNOWLEDGEMENTS</samp>
-
-|     |     | Inspiration and Resources                   |     |     |
-| :-: | :-: | :------------------------------------------ | :-- | :-: |
-|     |  1  | [owl4ce](https://github.com/owl4ce)         |     |     |
-|     |  2  | [Ilham25](https://github.com/ilham25)       |     |     |
-|     |  3  | [Siduck](https://github.com/siduck)         |     |     |
-|     |  4  | [NvChad](https://github.com/NvChad)         |     |     |
-|     |  5  | [Rxyhn](https://github.com/rxyhn)           |     |     |
-|     |  6  | [HeinzDev](https://github.com/HeinzDev)     |     |     |
-|     |  7  | [fufexan](https://github.com/fufexan)       |     |     |
-|     |  8  | [AmitGolden](https://github.com/AmitGolden) |     |     |
-|     |     |                                             |     |     |
-
-## 🌳 <samp>CONTRIBUTING</samp>
-
-WIP
-
-## 🎃 <samp>SECURITY POLICY</samp>
-
-<pre align="center">
-<a href="#readme">BACK TO TOP</a>
-</pre>
+```bash
+cat > .gitattributes <<'EOF'
+*.nix text eol=lf
+*.sh text eol=lf
+*.fish text eol=lf
+*.toml text eol=lf
+EOF
+```
