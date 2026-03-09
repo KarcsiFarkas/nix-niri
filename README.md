@@ -1,15 +1,16 @@
 # nix-niri
 
-NixOS flake for my `aesthetic` host, centered around Niri and a modular
+NixOS flake for my `legion` and `wsl-host` hosts, centered around Niri and a modular
 split between `system/` and `home/`.
 
 ## What changed
 
 - Migrated to a pure flake/module layout with `flake-parts`.
 - Host wiring is now centralized in `hosts/default.nix`.
-- `aesthetic` composes `desktop + laptop` module sets from `system/default.nix`.
+- `legion` composes `desktop + laptop` module sets from `system/default.nix`.
+- `wsl-host` uses a minimal WSL-safe module set.
 - User environment modules live under `home/` and are imported directly.
-- Security hardening was expanded in `hosts/aesthetic/default.nix` (kernel params,
+- Security hardening was expanded in `hosts/legion/default.nix` (kernel params,
   sysctls, apparmor, TPM2, systemd coredump restrictions).
 - Daily workflow is built around `nh` (`nh os test`, `nh os switch`).
 
@@ -20,7 +21,8 @@ split between `system/` and `home/`.
 ├─ flake.nix
 ├─ hosts/
 │  ├─ default.nix
-│  └─ aesthetic/
+│  ├─ legion/
+│  └─ wsl-host/
 ├─ system/
 │  ├─ core/
 │  ├─ hardware/
@@ -51,29 +53,37 @@ split between `system/` and `home/`.
 From the repo root:
 
 ```bash
-NH_FLAKE=$PWD nh os test --hostname aesthetic
+NH_FLAKE=$PWD nh os test --hostname legion
 ```
 
 Apply:
 
 ```bash
-NH_FLAKE=$PWD nh os switch --hostname aesthetic
+NH_FLAKE=$PWD nh os switch --hostname legion
 ```
 
 Direct flake check (without `nh`):
 
 ```bash
-nix build .#nixosConfigurations.aesthetic.config.system.build.toplevel
+nix build .#nixosConfigurations.legion.config.system.build.toplevel
+```
+
+WSL host:
+
+```bash
+NH_FLAKE=$PWD nh os test --hostname wsl-host
+NH_FLAKE=$PWD nh os switch --hostname wsl-host
+nix build .#nixosConfigurations.wsl-host.config.system.build.toplevel
 ```
 
 ## Fresh install (minimal)
 
 ```bash
-git clone --depth 1 https://github.com/linuxmobile/nix-niri /mnt/etc/nixos
+git clone --depth 1 https://github.com/KarcsiFarkas/nix-niri /mnt/etc/nixos
 cd /mnt/etc/nixos
-nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic
-rm -f /mnt/etc/nixos/hosts/aesthetic/configuration.nix
-nixos-install --flake .#aesthetic
+nixos-generate-config --dir /mnt/etc/nixos/hosts/legion
+rm -f /mnt/etc/nixos/hosts/legion/configuration.nix
+nixos-install --flake .#legion
 ```
 
 ## Screenshots
@@ -105,7 +115,7 @@ Run this in WSL from repo root:
 
 ```bash
 find . -name '*.nix' -type f -print0 | xargs -0 sed -i 's/\r$//'
-NH_FLAKE=$PWD nh os test --hostname aesthetic
+NH_FLAKE=$PWD nh os test --hostname legion
 ```
 
 Recommended to prevent recurrence:

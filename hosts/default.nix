@@ -15,19 +15,32 @@
     # get these into the module system
     specialArgs = {inherit inputs self;};
   in {
-    aesthetic = nixosSystem {
+    legion = nixosSystem {
       inherit specialArgs;
       modules =
         desktop
         ++ laptop
         ++ [
-          ./aesthetic
+          ./legion
           "${mod}/services/gnome-services.nix"
           "${mod}/core/limine.nix"
           "${home}"
 
           inputs.agenix.nixosModules.default
         ];
+    };
+
+    wsl-host = nixosSystem {
+      inherit specialArgs;
+      modules = [
+        ./wsl-host
+
+        "${mod}/nix"
+        "${mod}/programs/fish.nix"
+
+        inputs.agenix.nixosModules.default
+        inputs.nixos-wsl.nixosModules.default
+      ];
     };
   };
 }

@@ -42,6 +42,11 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # rest of inputs, alphabetical order
     agenix = {
       url = "github:ryantm/agenix";

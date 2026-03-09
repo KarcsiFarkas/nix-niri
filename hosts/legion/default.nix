@@ -134,7 +134,7 @@
     '';
   };
 
-  networking.hostName = "aesthetic";
+  networking.hostName = "legion";
 
   security.tpm2.enable = true;
 
