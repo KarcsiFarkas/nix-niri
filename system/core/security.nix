@@ -69,6 +69,8 @@
 
   security = {
     # allow wayland lockers to unlock the screen
+    pam.services.swaylock = {};
+    pam.services.hyprlock = {};
     # userland niceness
     rtkit.enable = true;
     polkit.enable = true;

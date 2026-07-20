@@ -2,6 +2,7 @@ _: {
   imports = [
     ./fonts.nix
     ./xdg.nix
+    ./steam.nix
   ];
 
   programs = {

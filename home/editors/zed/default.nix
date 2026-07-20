@@ -145,6 +145,10 @@ in {
   users.users.karixos.packages = [
     zedWithLSP
   ];
+  environment.sessionVariables = {
+    EDITOR = "zeditor";
+    VISUAL = "zeditor";
+  };
   xdg.configFile."${configFile}" = {
     text = settingsJSON;
     mutable = true;
